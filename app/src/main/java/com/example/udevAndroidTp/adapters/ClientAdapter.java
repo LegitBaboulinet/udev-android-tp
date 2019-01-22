@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.example.udevAndroidTp.R;
 import com.example.udevAndroidTp.classes.Client;
 
-import java.util.List;
-
 public class ClientAdapter extends ArrayAdapter<Client> {
 
     private Context ctx;
