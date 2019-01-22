@@ -31,11 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private void behaviorViews() {
 
         // Séléction des clients et affichage dans la liste
-        // DatabaseHelper databaseHelper = new DatabaseHelper(this, false);
-        // SQLiteDatabase database = databaseHelper.getWritableDatabase();
-        // Client[] arrayOfClients = databaseHelper.selectAllClients(database);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this, false);
+        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+        Client[] arrayOfClients = databaseHelper.selectAllClients(database);
 
-        Client[] arrayOfClients = new Client[] {
+        // Jeu de test
+        /*Client[] arrayOfClients = new Client[] {
                 new Client(
                         "Monsieur",
                         "Jean-Claude",
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         "https://www.jcvd-official.com/",
                         false
                 )
-        };
+        };*/
 
         ClientAdapter clientAdapter = new ClientAdapter(this, android.R.layout.simple_list_item_1, arrayOfClients);
         clientsListView.setAdapter(clientAdapter);
