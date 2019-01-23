@@ -46,19 +46,8 @@ public class ClientActivity extends AppCompatActivity {
         /*
         On récupére la valeur envoyé par l'intent (Voir ListPersonneActivity.java)
          */
-        //Client ClientByIntent = (Client) getIntent().getExtras().getSerializable("clientActivityIntent");
-        final Client ClientByIntent = new Client(
-                "Monsieur",
-                "Jean-Claude",
-                "Van Damme",
-                "142 rue des arbres",
-                "EuroCorp",
-                "0606060606",
-                "jcvd@gmail.com",
-                60,
-                "https://www.jcvd.com/",
-                true
-        );
+        final Client ClientByIntent = (Client) getIntent().getExtras().getSerializable("clientActivityIntent");
+
         identityTextView.setText(ClientByIntent.getCivility() + " " + ClientByIntent.getName() + " "
                 + ClientByIntent.getFirstName() + " " + String.valueOf(ClientByIntent.getAge()) + " ans");
         companyTextView.setText(ClientByIntent.getCompany());
@@ -94,6 +83,17 @@ public class ClientActivity extends AppCompatActivity {
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(mailTextView.getContext(), "Aucun client mail installé", Toast.LENGTH_LONG).show();
 
+                }
+            }
+        });
+
+        webSiteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (webSiteTextView != null) {
+                    Intent webViewActivityIntent = new Intent(webSiteTextView.getContext(), WebViewActivity.class);
+                    webViewActivityIntent.putExtra("url", webSiteTextView.getText());
+                    startActivity(webViewActivityIntent);
                 }
             }
         });
