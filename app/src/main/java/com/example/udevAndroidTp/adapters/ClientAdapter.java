@@ -1,10 +1,9 @@
 package com.example.udevAndroidTp.adapters;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -26,10 +25,9 @@ public class ClientAdapter extends ArrayAdapter<Client> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View inflatedConvertView = null;
 
         if (convertView == null) {
-            inflatedConvertView = LayoutInflater.from(getContext())
+            convertView = LayoutInflater.from(getContext())
                     .inflate(
                             R.layout.client_cell,
                             parent,
@@ -39,15 +37,15 @@ public class ClientAdapter extends ArrayAdapter<Client> {
 
         ClientHolder clientHolder = new ClientHolder();
 
-        clientHolder.nameClientCellTextView = inflatedConvertView.findViewById(R.id.nameClientCellTextView);
-        clientHolder.firstNameClientCellTextView = inflatedConvertView.findViewById(R.id.firstNameClientCellTextView);
+        clientHolder.nameClientCellTextView = convertView.findViewById(R.id.nameClientCellTextView);
+        clientHolder.firstNameClientCellTextView = convertView.findViewById(R.id.firstNameClientCellTextView);
 
         Client client = getItem(position);
 
         clientHolder.firstNameClientCellTextView.setText(client.getFirstName());
-        clientHolder.nameClientCellTextView.setText(client.getName());
+        clientHolder.nameClientCellTextView.setText(client.getName().toUpperCase());
 
-        return inflatedConvertView;
+        return convertView;
     }
 
     private class ClientHolder {

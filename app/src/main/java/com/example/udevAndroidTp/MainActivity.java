@@ -3,16 +3,25 @@ package com.example.udevAndroidTp;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.udevAndroidTp.adapters.ClientAdapter;
 import com.example.udevAndroidTp.classes.Client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Retrofit retroFit;
 
     private ListView clientsListView;
 
@@ -20,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialisation de RetroFit
+        retroFit = new Retrofit.Builder()
+                .baseUrl("http://20.188.38.133/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         initiateLayouts();
         behaviorViews();
     }
@@ -30,45 +46,54 @@ public class MainActivity extends AppCompatActivity {
 
     private void behaviorViews() {
 
+        // Récupération des clients depuis la base de données
+        callWebServiceForClientsActivity();
+
         // Séléction des clients et affichage dans la liste
         DatabaseHelper databaseHelper = new DatabaseHelper(this, false);
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
         Client[] arrayOfClients = databaseHelper.selectAllClients(database);
 
-        // Jeu de test
-        /*Client[] arrayOfClients = new Client[] {
-                new Client(
-                        "Monsieur",
-                        "Jean-Claude",
-                        "Van Damme",
-                        "142 rue des arbres",
-                        "EuroCorp",
-                        "0606060606",
-                        "jcvd@gmail.com",
-                        60,
-                        "https://www.jcvd.com/",
-                        true
-                ),
-                new Client(
-                        "Madame",
-                        "Jeanne-Claudette",
-                        "Van Damme",
-                        "142 rue des arbres",
-                        "MondialCorp",
-                        "0707070707",
-                        "jcvd@outlook.com",
-                        60,
-                        "https://www.jcvd-official.com/",
-                        false
-                )
-        };*/
-
         ClientAdapter clientAdapter = new ClientAdapter(this, android.R.layout.simple_list_item_1, arrayOfClients);
         clientsListView.setAdapter(clientAdapter);
     }
 
+    private void callWebServiceForClientsActivity() {
+
+        // Appel du webservice à la route '/Clients'
+        WebServiceCallBackInterface callbackInterface = retroFit.create(WebServiceCallBackInterface.class);
+
+        // Récupération de l'appel
+        Call<List<Client>> getClientsCall = callbackInterface.getClients();
+
+        getClientsCall.enqueue(new Callback<List<Client>>() {
+            @Override
+            public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
+
+                // Création du database helper
+                DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext(), true);
+
+                // Récupération de la base de donneés
+                SQLiteDatabase database = databaseHelper.getWritableDatabase();
+
+                try {
+                    // Insertion des personnes dans la base de données
+                    databaseHelper.insertListeClient(new ArrayList<Client>(response.body()), database);
+                } catch (NullPointerException e) {
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Impossible de contacter le serveur", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Client>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Impossible de contacter le serveur", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public interface WebServiceCallBackInterface {
         @GET("Clients")
-        Call<Client> getClients();
+        Call<List<Client>> getClients();
     }
 }
