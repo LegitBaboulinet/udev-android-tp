@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ public class ClientActivity extends AppCompatActivity {
     TextView webSiteTextView;
     TextView phoneNumberTextView;
     TextView mailTextView;
+    ImageView civilityImageView;
+    TextView ageTextView;
 
 
 
@@ -35,21 +38,33 @@ public class ClientActivity extends AppCompatActivity {
 
     private void initiateLayouts() {
         identityTextView = findViewById(R.id.indentityTextView);
+        ageTextView = findViewById(R.id.ageTextView);
         companyTextView = findViewById(R.id.companyTextView);
         addressTextView = findViewById(R.id.addressTextView);
         webSiteTextView = findViewById(R.id.webSiteTextView);
         phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
         mailTextView = findViewById(R.id.mailTextView);
+        civilityImageView = findViewById(R.id.civilityImageView);
     }
 
     private void behaviorViews() {
         /*
-        On récupére la valeur envoyé par l'intent (Voir ListPersonneActivity.java)
+        On récupére la valeur envoyé par l'intent
          */
         final Client ClientByIntent = (Client) getIntent().getExtras().getSerializable("clientActivityIntent");
 
+        if (ClientByIntent.getCivility().toLowerCase().equals("madame")) {
+
+            civilityImageView.setImageResource(R.drawable.usergirl);
+        } else if (ClientByIntent.getCivility().toLowerCase().equals("monsieur")) {
+            civilityImageView.setImageResource(R.drawable.userboy);
+        } else {
+            civilityImageView.setImageResource(R.drawable.userapache);
+        }
+
         identityTextView.setText(ClientByIntent.getCivility() + " " + ClientByIntent.getName() + " "
-                + ClientByIntent.getFirstName() + " " + String.valueOf(ClientByIntent.getAge()) + " ans");
+                + ClientByIntent.getFirstName());
+        ageTextView.setText(String.valueOf(ClientByIntent.getAge()) + " ans");
         companyTextView.setText(ClientByIntent.getCompany());
         addressTextView.setText(ClientByIntent.getAddress());
         webSiteTextView.setText(ClientByIntent.getWebSite());
