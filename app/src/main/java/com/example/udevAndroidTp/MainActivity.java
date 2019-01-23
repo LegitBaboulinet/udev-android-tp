@@ -1,11 +1,15 @@
 package com.example.udevAndroidTp;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.udevAndroidTp.activities.ClientActivity;
 import com.example.udevAndroidTp.adapters.ClientAdapter;
 import com.example.udevAndroidTp.classes.Client;
 
@@ -53,9 +57,19 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this, false);
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
         Client[] arrayOfClients = databaseHelper.selectAllClients(database);
-
         ClientAdapter clientAdapter = new ClientAdapter(this, android.R.layout.simple_list_item_1, arrayOfClients);
         clientsListView.setAdapter(clientAdapter);
+
+        // Gestion du click d'élément de la liste
+        clientsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Client clientClicked = (Client) parent.getItemAtPosition(position);
+                Intent clickedPersonneIntent = new Intent(clientsListView.getContext(), ClientActivity.class);
+                clickedPersonneIntent.putExtra("clientActivityIntent", clientClicked);
+                startActivity(clickedPersonneIntent);
+            }
+        });
     }
 
     private void callWebServiceForClientsActivity() {
