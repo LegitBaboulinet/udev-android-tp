@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="110"
+    android:weightSum="60"
     tools:context=".activities.ClientActivity">
 
     <LinearLayout
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="2"
         android:orientation="horizontal">
 
         <TextView
@@ -29,7 +29,6 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:orientation="horizontal">
-        <!-- TODO: Combiner Civilité, nom, prénom -->
         <TextView
             android:id="@+id/indentityTextView"
             android:layout_width="match_parent"
@@ -43,16 +42,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="3"
         android:orientation="horizontal">
-        <!-- TODO: Contact -->
+
         <TextView
             android:id="@+id/contactTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="CONTACT" />
+            android:text="Contact Information"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/companyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="company" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="address"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,22 +92,24 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:orientation="horizontal">
-        <!-- TODO: Adresse, mail, tel et site web -->
-        <TextView
-            android:id="@+id/companyTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="company" />
 
         <TextView
-            android:id="@+id/addressTextView"
+            android:id="@+id/phoneNumberTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="phoneNumber"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/mailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="7"
             android:gravity="center"
-            android:text="address" />
+            android:text="mail"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,46 +124,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="website" />
-
-
+            android:text="website"
+            android:textAlignment="center" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/phoneNumberTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="phoneNumber" />
-
-        <TextView
-            android:id="@+id/mailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:gravity="center"
-            android:text="mail" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal"></LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal"></LinearLayout>
 
 
 </LinearLayout>
