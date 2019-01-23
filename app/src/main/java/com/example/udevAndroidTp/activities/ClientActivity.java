@@ -22,6 +22,7 @@ public class ClientActivity extends AppCompatActivity {
     TextView phoneNumberTextView;
     TextView mailTextView;
     ImageView civilityImageView;
+    ImageView premiumImageView;
     TextView ageTextView;
 
 
@@ -39,6 +40,7 @@ public class ClientActivity extends AppCompatActivity {
     private void initiateLayouts() {
         identityTextView = findViewById(R.id.indentityTextView);
         ageTextView = findViewById(R.id.ageTextView);
+        premiumImageView = findViewById(R.id.premiumImageView);
         companyTextView = findViewById(R.id.companyTextView);
         addressTextView = findViewById(R.id.addressTextView);
         webSiteTextView = findViewById(R.id.webSiteTextView);
@@ -60,6 +62,12 @@ public class ClientActivity extends AppCompatActivity {
             civilityImageView.setImageResource(R.drawable.userboy);
         } else {
             civilityImageView.setImageResource(R.drawable.userapache);
+        }
+
+        if (ClientByIntent.isPremium()) {
+            premiumImageView.setVisibility(View.VISIBLE);
+        } else {
+            premiumImageView.setVisibility(View.GONE);
         }
 
         identityTextView.setText(ClientByIntent.getCivility() + " " + ClientByIntent.getName() + " "
