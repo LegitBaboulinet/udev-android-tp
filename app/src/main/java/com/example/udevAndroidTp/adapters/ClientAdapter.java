@@ -12,15 +12,8 @@ import com.example.udevAndroidTp.classes.Client;
 
 public class ClientAdapter extends ArrayAdapter<Client> {
 
-    private Context ctx;
-    private int resource;
-    private Client[] clients;
-
     public ClientAdapter(Context context, int resource, Client[] clients) {
         super(context, resource, clients);
-        this.ctx = ctx;
-        this.resource = resource;
-        this.clients = clients;
     }
 
     @Override
