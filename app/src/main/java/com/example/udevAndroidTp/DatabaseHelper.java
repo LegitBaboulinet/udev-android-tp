@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertListeClient(List<Client> clientList, SQLiteDatabase db) {
-        for (int i = 0; clientList.size() - 1 > i; i++) {
+        for (int i = 0; i < clientList.size(); i++) {
             Client currentClient = clientList.get(i);
 
             int premium = (currentClient.isPremium()) ? 1 : 0;
@@ -100,7 +100,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("premium", premium);
 
             db.insert(TABLE_NAME_CLIENT, null, values);
-            Log.d("ERR", currentClient.getFirstName());
         }
     }
 
